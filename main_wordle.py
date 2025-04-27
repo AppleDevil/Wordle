@@ -1,49 +1,12 @@
 import random 
-from colorama import Fore, Back, Style
-import requests
 import os
-from pathlib import Path
 import string
 import time
+from game_functions import feedback, availability, get_definition, give_hint
 
-def feedback():
-    for i in range(len(guess)): 
-        letter = guess[i]
-        if letter not in used_letters:
-            used_letters.append(letter)
-        if letter == answer[i]:  # Replace guess[i] with letter
-            print(Fore.GREEN + letter + Style.RESET_ALL, end=" ")
-        elif letter in answer:  # Replace guess[i] with letter
-            print(Fore.YELLOW + letter + Style.RESET_ALL, end=" ")
-        elif letter not in answer:  # Replace guess[i] with letter
-            print("\033[90m" + letter + "\033[39m", end=" ")
-    print() #prints a new line after giving the feedback
-
-def availability():
-    for used in used_letters:
-        if used in available_letters:
-           available_letters.remove(used)
-
-def get_definition():
-    url = (f'https://api.dictionaryapi.dev/api/v2/entries/en/{answer}')
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        meanings = data[0]["meanings"]
-        for meaning in meanings:
-            part_of_speech = meaning["partOfSpeech"]
-            for definition in meaning["definitions"]:
-                print(f"- ({part_of_speech}) {definition['definition']}")
-    else:
-        print(f"'{answer}' is not a valid English word.")   
-
-def give_hint():
-    for letter in answer:  
-        if letter in available_letters:
-            print(f"Hint: The word contains the letter '{letter}'")
-            break
-
-if __name__ == "__main__":
+def main():
+    global guess, used_letters, available_letters, answer  # declare globals used in functions
+    
     dirname = os.path.dirname(__file__)
     os.chdir(dirname)
     print("Current directory:", os.getcwd())
@@ -78,27 +41,28 @@ if __name__ == "__main__":
                 guess = input('That is not 5 letters, please Enter a 5 letter word: ').upper()
             elif guess not in valid_words.upper():
                 guess = input('That is not a valid word, please Re-enter another 5 letter word: ').upper()
-        tries +=  1
+        tries += 1
         remaining_tries = (max_tries - tries)
-        feedback()
-        availability()
+        feedback(guess, answer, used_letters)  # Call the function from game_functions
+        availability(used_letters, available_letters)  # Call the function from game_functions
         if guess.upper() == answer.upper(): 
             end_time = time.time() - start_time
             print(f"You are correct, well done! It took you {tries} turns and {round(end_time, 2)} seconds to complete the Wordle")
             break
         if remaining_tries != 0:
+            print(f'You have {remaining_tries} remaining tries')
             letter_bank = input("Would you like to see your available letters? Enter 'yes' or 'no': ").upper()
             if letter_bank == 'YES' or letter_bank == "Y":
                 print("Available letters:", '  '.join(available_letters))
-        if remaining_tries != 0:
-            print(f'You have {remaining_tries} remaining tries')
         if tries == max_tries / 2:
             hint = input("Would you like a hint? NOTE: this will be your last and final hint. Enter 'yes' or 'no': ").upper()
             if hint == 'YES' or hint == "Y":
-                give_hint()
+                give_hint(answer, available_letters)  # Call the function from game_functions
 
     show_def = input(f"Would you like to see the definition of the answer word ({answer})? Enter 'yes' or 'no': ").upper()
     if show_def == 'YES' or show_def == 'Y':
-        get_definition()
-    else:
-        quit()
+        get_definition(answer)  # Call the function from game_functions
+    quit()
+
+if __name__ == "__main__":
+    main()
