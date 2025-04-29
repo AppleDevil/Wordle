@@ -1,4 +1,7 @@
 import sys
+import string
 
-letter = 'mango'
+# List of all uppercase letters
+letter = 'normal'
+ 
 print(sys.getsizeof(letter), "bytes")
