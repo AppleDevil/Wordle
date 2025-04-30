@@ -23,6 +23,7 @@ A simple command-line Wordle clone built in Python. This version includes diffic
 - `game_functions.py`: Contains helper functions like feedback display, hint logic, and dictionary lookup  
 - `answer_wordle_words.txt`: A list of possible answer words  
 - `valid-wordle-words.txt`: A list of valid words the user can guess
+- `main_wordle.exe`: Windows executable for running the game without Python
 
 ---
 

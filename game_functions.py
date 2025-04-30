@@ -1,4 +1,5 @@
 #game_functions.py
+# This project is licensed under the MIT License. See the LICENSE file for details.
 # Importing necessary libraries
 import random  # Random is used for generating random numbers or choosing random elements
 from colorama import Fore, Back, Style  # Importing for coloured output in the terminal

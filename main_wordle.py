@@ -1,4 +1,5 @@
 # main_wordle.py
+# This project is licensed under the MIT License. See the LICENSE file for details.
 # importing necessary libraries and files
 import random 
 import os
@@ -30,15 +31,17 @@ def main():
     used_letters = [] #prepare the variable to store a list, this initializes an empty list
     answer_words = [] 
 
+#Obtained from https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b, official Wordle Wordlist 
     with open("answer_wordle_words.txt", "r") as answer_file: #open the file, read it and then close it and save its contents as a varible named answer_file 
         for line in answer_file: #iterate through each line in answer_file
             answer_words.append(line.strip()) # Remove the newline and add it to the list
 
+#Obtained from https://gist.github.com/cfreshman/cdcdf777450c5b5301e439061d29694c official Wordle Wordlist 
     word_length = 5 #declare the word length
     tries = 0 #Used as a counter for how many tries have been done yet
     answer = random.choice(answer_words).upper() #using the random library select a random answer
     with open("valid-wordle-words.txt", "r") as valid_file: 
-        valid_words = valid_file.read().upper 
+        valid_words = valid_file.read().upper()
 
 
     print(separator) #print the seperator 
@@ -101,7 +104,7 @@ def main():
         print(separator)
         get_definition(answer)  # Call the function from game_functions
         print(separator)
-        
+
 # Ensure main() runs only when this script is executed directly
 if __name__ == "__main__":
     main()
