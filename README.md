@@ -24,7 +24,7 @@ A simple command-line Wordle clone built in Python. This version includes diffic
 - `answer_wordle_words.txt`: A list of possible answer words  
 - `valid-wordle-words.txt`: A list of valid words the user can guess
 - `main_wordle.exe`: Windows executable for running the game without Python
-
+ - ensure that: all files are in the same folder and you have installed requirements.txt
 ---
 
 ## Requirements
